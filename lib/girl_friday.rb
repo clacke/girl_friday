@@ -16,6 +16,13 @@ require 'girl_friday/persistence'
 require 'girl_friday/batch'
 
 module GirlFriday
+  if ConditionVariable.instance_method(:wait).arity == 1
+    class ConditionVariable < ::ConditionVariable
+      def wait mutex, ignored_timeout
+        super mutex
+      end
+    end
+  end
 
   @lock = Mutex.new
 
